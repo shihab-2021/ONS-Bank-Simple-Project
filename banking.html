@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking Page</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="w-4/5 mx-auto">
+    <h1 class="text-6xl text-center my-20"><span class="text-red-400">ONS</span> Banking</h1>
+    <!-- Banking Amount -->
+    <div class="grid grid-cols-3 gap-5">
+        <div class="bg-green-300 p-8 rounded">
+            <h2 class="text-4xl">Deposit</h2>
+            <h1 class="text-5xl">$<span id="totalDeposit">00</span></h1>
+        </div>
+        <div class="bg-blue-300 p-8 rounded">
+            <h2 class="text-4xl">Withdraw</h2>
+            <h1 class="text-5xl">$<span id="totalWithdraw">00</span></h1>
+        </div>
+        <div class="bg-red-300 p-8 rounded">
+            <h2 class="text-4xl">Balance</h2>
+            <h1 class="text-5xl">$<span id="totalBalance">1200</span></h1>
+        </div>
+    </div>
+    <!-- Deposit and Withdraw -->
+    <div class="grid grid-cols-2 my-5 gap-4 text-white">
+        <div class="bg-pink-400 p-8 rounded">
+            <h1 class="text-4xl">Please Deposit</h1>
+            <input id="depoAmount" class="w-4/5 my-5 p-3 block text-black" type="text" placeholder="$ Deposit amount">
+            <button id="depositBtn" class="mx-auto p-3 bg-green-500 rounded">Deposit</button>            
+        </div>
+        <div class="bg-purple-400 p-8 rounded">
+            <h1 class="text-4xl">Please Withdraw</h1>
+            <input id="widrAmount" class="w-4/5 my-5 p-3 block text-black" type="text" placeholder="$ Withdraw amount">
+            <button id="withdrawBtn" class="mx-auto p-3 bg-green-500 rounded">Withdraw</button>            
+        </div>
+    </div>
+    <script>
+        // handling Deposit Button 
+        document.getElementById('depositBtn').addEventListener('click',function(){
+            const depositAmount = document.getElementById('depoAmount');
+            const depositValue = parseFloat(depositAmount.value);
+            const depositTotal = document.getElementById('totalDeposit');
+            const pastDepositAmount = parseFloat(depositTotal.innerText);
+            const currentDepositAmount = pastDepositAmount + depositValue;
+            depositTotal.innerText = currentDepositAmount;
+            depositAmount.value = '';
+            // update Balance for Deposit 
+            const balanceTotal = document.getElementById('totalBalance');
+            const pastBalanceAmount = parseFloat(balanceTotal.innerText);
+            const currentBalanceAmount = pastBalanceAmount + depositValue;
+            balanceTotal.innerText = currentBalanceAmount;
+        })
+        // handling Withdraw Button 
+        document.getElementById('withdrawBtn').addEventListener('click',function(){
+            const withdrawAmount = document.getElementById('widrAmount');
+            const withdrawValue = parseFloat(withdrawAmount.value);
+            const withdrawTotal = document.getElementById('totalWithdraw');
+            const pastWithdrawAmount = parseFloat(withdrawTotal.innerText);
+            const currentWithdrawAmount = pastWithdrawAmount + withdrawValue;
+            withdrawTotal.innerText = currentWithdrawAmount;
+            withdrawAmount.value = '';
+            // update Balance for Withdraw 
+            const balanceTotal = document.getElementById('totalBalance');
+            const pastBalanceAmount = parseFloat(balanceTotal.innerText);
+            const currentBalanceAmount = pastBalanceAmount - withdrawValue;
+            balanceTotal.innerText = currentBalanceAmount;
+        })
+    </script>
+</body>
+</html>
