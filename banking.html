@@ -28,8 +28,8 @@
     <div class="grid grid-cols-2 my-5 gap-4 text-white">
         <div class="bg-pink-400 p-8 rounded">
             <h1 class="text-4xl">Please Deposit</h1>
-            <input id="depoAmount" class="w-4/5 my-5 p-3 block text-black" type="text" placeholder="$ Deposit amount">
-            <button id="depositBtn" class="mx-auto p-3 bg-green-500 rounded">Deposit</button>            
+            <input id="depoAmount" class="w-4/5 my-5 p-3 block text-black" type="text" placeholder="$  amount">
+            <button id="DepositBtn" class="mx-auto p-3 bg-green-500 rounded">Deposit</button>            
         </div>
         <div class="bg-purple-400 p-8 rounded">
             <h1 class="text-4xl">Please Withdraw</h1>
@@ -38,35 +38,40 @@
         </div>
     </div>
     <script>
+        function count(inputId1,inputId2,inputId3,condition){
+            const Amount = document.getElementById(inputId1);
+            const Value = parseFloat(Amount.value);
+            const Total = document.getElementById(inputId2);
+            const pastAmount = parseFloat(Total.innerText);
+            if(Value > 0){
+                const currentAmount = pastAmount + Value;
+                Total.innerText = currentAmount;
+                // update Balance 
+                const balanceTotal = document.getElementById(inputId3);
+                const pastBalanceAmount = parseFloat(balanceTotal.innerText);
+                if(Value > 0 && condition == false && Value < pastBalanceAmount)
+                {
+                    const currentAmount = pastAmount + Value;
+                    Total.innerText = currentAmount;
+                }
+                if(condition == true)
+                {
+                    balanceTotal.innerText = pastBalanceAmount + Value;
+                }
+                else if(Value < pastBalanceAmount)
+                {
+                    balanceTotal.innerText = pastBalanceAmount - Value;
+                }
+            }
+            Amount.value = '';
+        }
         // handling Deposit Button 
-        document.getElementById('depositBtn').addEventListener('click',function(){
-            const depositAmount = document.getElementById('depoAmount');
-            const depositValue = parseFloat(depositAmount.value);
-            const depositTotal = document.getElementById('totalDeposit');
-            const pastDepositAmount = parseFloat(depositTotal.innerText);
-            const currentDepositAmount = pastDepositAmount + depositValue;
-            depositTotal.innerText = currentDepositAmount;
-            depositAmount.value = '';
-            // update Balance for Deposit 
-            const balanceTotal = document.getElementById('totalBalance');
-            const pastBalanceAmount = parseFloat(balanceTotal.innerText);
-            const currentBalanceAmount = pastBalanceAmount + depositValue;
-            balanceTotal.innerText = currentBalanceAmount;
+        document.getElementById('DepositBtn').addEventListener('click',function(){
+            count('depoAmount','totalDeposit','totalBalance', true);
         })
         // handling Withdraw Button 
         document.getElementById('withdrawBtn').addEventListener('click',function(){
-            const withdrawAmount = document.getElementById('widrAmount');
-            const withdrawValue = parseFloat(withdrawAmount.value);
-            const withdrawTotal = document.getElementById('totalWithdraw');
-            const pastWithdrawAmount = parseFloat(withdrawTotal.innerText);
-            const currentWithdrawAmount = pastWithdrawAmount + withdrawValue;
-            withdrawTotal.innerText = currentWithdrawAmount;
-            withdrawAmount.value = '';
-            // update Balance for Withdraw 
-            const balanceTotal = document.getElementById('totalBalance');
-            const pastBalanceAmount = parseFloat(balanceTotal.innerText);
-            const currentBalanceAmount = pastBalanceAmount - withdrawValue;
-            balanceTotal.innerText = currentBalanceAmount;
+            count('widrAmount','totalWithdraw','totalBalance', false);
         })
     </script>
 </body>
